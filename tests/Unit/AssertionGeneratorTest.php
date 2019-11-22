@@ -26,12 +26,22 @@ class AssertionGeneratorTest extends \PHPUnit\Framework\TestCase
     public function generateDataProvider(): array
     {
         return [
-            'default' => [
+            'exists, css selector' => [
                 'assertionString' => '".selector" exists',
                 'expectedAssertion' => new ExaminationAssertion(
                     '".selector" exists',
                     new DomIdentifierValue(
                         new DomIdentifier('.selector')
+                    ),
+                    AssertionComparison::EXISTS
+                ),
+            ],
+            'exists, xpath expression containing escaped double quotes' => [
+                'actionString' => '"//*[@id=\"element-id\"]" exists',
+                'expectedAssertion' => new ExaminationAssertion(
+                    '"//*[@id=\"element-id\"]" exists',
+                    new DomIdentifierValue(
+                        new DomIdentifier('//*[@id="element-id"]')
                     ),
                     AssertionComparison::EXISTS
                 ),
